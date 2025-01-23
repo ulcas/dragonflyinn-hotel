@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Reserva;
 use App\Repository\QuartoRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ReservaController extends Controller
 {
@@ -13,8 +14,10 @@ class ReservaController extends Controller
         $this->quartoRepository = $quartoRepository;
     }
 
-    /**
+    /** 
      * Display a listing of the resource.
+     * 
+     * @return Response
      */
     public function index()
     {
@@ -24,6 +27,9 @@ class ReservaController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -37,13 +43,19 @@ class ReservaController extends Controller
             'periodo_ate' => $request->periodo_ate,
         ]);
 
-        $this->quartoRepository->updateQuarto($request->quarto_id, ['disponivel' => 0]);
+        $this->quartoRepository->updateQuarto(
+            $request->quarto_id,
+             ['disponivel' => 0]
+        );
 
         return response()->json($reserva, 201);
     }
 
     /**
      * Display the specified resource.
+     * 
+     * @param string $email
+     * @return Response
      */
     public function show(string $email)
     {
@@ -57,26 +69,31 @@ class ReservaController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * @param Request $request
+     * @param integer $id
+     * @return Response
      */
     public function update(Request $request, int $id)
     {
         $reserva = $this->reserva->find($id);
 
         if (!isset($reserva)) {
-            return response()->json(['Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['Impossível realizar a atualização. O recurso solicitado não existe'],
+                404
+            );
         }
 
-        if($request->method() === 'PATCH') {
-
+        if ($request->method() === 'PATCH') {
             $regrasDinamicas = array();
             foreach($reserva->rules() as $input => $regra) {
-                if(array_key_exists($input, $request->all())) {
+                if (array_key_exists($input, $request->all())) {
                     $regrasDinamicas[$input] = $regra;
                 }
             }
             
             $request->validate($regrasDinamicas, $reserva->feedback());
-
         } else {
             $request->validate($reserva->rules(), $reserva->feedback());
         }
@@ -87,19 +104,28 @@ class ReservaController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * @param integer $id
+     * @return Request
      */
     public function destroy(int $id)
     {
         $reserva = $this->reserva->find($id);
 
         if(!isset($reserva)) {
-            return response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+            return response()->json(
+                ['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'],
+                404
+            );
         }
 
         $quartoId = $reserva->quarto_id;
         $reserva->delete();
 
-        $this->quartoRepository->updateQuarto($quartoId, ['disponivel' => 1]);
+        $this->quartoRepository->updateQuarto(
+            $quartoId,
+            ['disponivel' => 1]
+        );
         return response()->json(['msg' => 'Reserva removida com sucesso!'], 200);
     }
 }

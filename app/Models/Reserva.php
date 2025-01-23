@@ -8,7 +8,6 @@ class Reserva extends Model
 {
     protected $fillable = ['nome', 'email', 'quarto_id', 'periodo_de', 'periodo_ate'];
     
-    // required|email|unique:users,email,'.$user->id,
     public function rules() {
         return [
             'nome' => 'required|min:3',
