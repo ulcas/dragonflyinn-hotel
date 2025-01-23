@@ -87,6 +87,7 @@ Explique como os usuários podem executar e interagir com o projeto após a inst
 | PUT/PATCH | api/reserva/{id} | id:int/body | Atualiza a reserva |
 | DELETE    | api/reserva/{id} | int | Remove a reserva |
 
+5. Caso deseje, pode utilizar a [Collection do Postman](https://github.com/ulcas/dragonflyinn-hotel/blob/main/Dragonfly%20Inn.postman_collection.json) para ajudar a executar as requisições na plataforma.
 ## Consideracoes
 
 Algumas considerações importantes para o melhor uso da aplicação:
