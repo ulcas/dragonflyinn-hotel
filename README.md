@@ -18,8 +18,8 @@ A Dragonfly Inn é uma pousada encantadora e acolhedora, localizada em um ambien
 ## Sobre
 
 Uma API simples que realiza as mais frequentes ações de uma pequena pousada. Verifica disponibilidade de quartos, consulta, cria, atualiza e deleta reservas.
-A aplicação foi construída de seguindo as diretrizes de uma API Restful e portanto, funciona de forma independente do front-end.
-(é recomendado a utilização do front-end e caso queira utilizar ele está disponível aqui: )
+A aplicação foi construída de seguindo as diretrizes de uma API Restful e portanto, funciona de forma independente do [front-end](https://github.com/ulcas/dragonflyinn-hotel-front).
+(é recomendado a utilização do front-end e caso queira utilizar ele está disponível aqui: https://github.com/ulcas/dragonflyinn-hotel-front)
 
 ## Funcionalidades
 
